@@ -16,11 +16,22 @@ body:
       label: Tag
       options:
         - UI Resources
-        - Designer
+        - Portfolios
         - Writing
         - Design Talks
     validations:
       required: true
+  - type: dropdown
+    id: subtag
+    attributes:
+      label: Sub-tag (optional)
+      description: Only for UI Resources. Leave as None for other tags.
+      options:
+        - None
+        - CSS Components
+        - Motion Components
+    validations:
+      required: false
   - type: input
     id: title
     attributes:
