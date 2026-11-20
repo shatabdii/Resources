@@ -49,7 +49,7 @@ async function main() {
 
   const { chromium } = await import('playwright');
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1014 } });
   try {
     await page.goto(url.href, { waitUntil: 'networkidle', timeout: 30000 });
   } catch {
@@ -57,6 +57,7 @@ async function main() {
     await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 45000 });
   }
   await page.waitForTimeout(2000);
+  // Landscape screenshot (1440 x 1014), same shape as the card image (243 x 171)
   await page.screenshot({ path: image, type: 'jpeg', quality: 80 });
   const pageTitle = await page.title();
   await browser.close();

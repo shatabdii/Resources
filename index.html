@@ -5,73 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Resources</title>
   <meta name="description" content="A curated library of design resources.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <style>
+    @font-face { font-family: 'Aspekta'; font-weight: 400; font-display: swap; src: url('fonts/Aspekta-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 600; font-display: swap; src: url('fonts/Aspekta-600.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 700; font-display: swap; src: url('fonts/Aspekta-700.woff2') format('woff2'); }
     :root {
       --bg: #ffffff;
-      --card: #ffffff;
-      --text: #000000;
+      --card: #f6f6f6;
+      --title: #444444;
+      --text: #373332;
       --muted: #6b6b6b;
+      --chip: #e8e7e7;
       --line: #e5e5e5;
-      --tag: #2b52bd;
       --shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-      font-optical-sizing: auto;
+      font-family: 'Aspekta', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
     header { max-width: 1520px; margin: 0 auto; padding: 64px 24px 16px; }
-    h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
+    h1 { font-size: 32px; font-weight: 700; color: var(--title); letter-spacing: -0.02em; margin: 0 0 8px; }
     .sub { color: var(--muted); font-size: 15px; margin: 0; }
+
+    /* Filter chips: same style as the tags */
     .filters {
       display: flex; flex-wrap: wrap; gap: 8px;
       max-width: 1520px; margin: 0 auto; padding: 8px 24px 32px;
     }
     .filters button {
-      font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; font-size: 14px;
-      border: 1px solid var(--line); background: var(--card); color: var(--text);
-      padding: 4px 10px; border-radius: 4px; cursor: pointer;
+      font: inherit; font-size: 14px; letter-spacing: 0.24px; color: var(--text);
+      background: var(--chip); border: 1px solid transparent;
+      padding: 6px 10px; border-radius: 4px; cursor: pointer;
     }
-    .filters button[aria-pressed="true"] { background: var(--tag); color: #fff; border-color: var(--tag); }
+    .filters button[aria-pressed="true"] { background: var(--text); color: #fff; }
+
+    /* Cards */
     main {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 24px;
       max-width: 1520px; margin: 0 auto; padding: 0 24px 80px;
     }
     .card {
       background: var(--card);
       border-radius: 8px;
-      padding: 4px 4px 12px;
-      box-shadow: var(--shadow);
-      display: flex; flex-direction: column; gap: 16px;
-      overflow: hidden;
+      padding: 48px 16px 12px;
+      display: flex; flex-direction: column; align-items: center; gap: 80px;
       text-decoration: none; color: inherit;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: background 0.15s ease;
     }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3), 0 6px 10px 4px rgba(0,0,0,0.15); }
+    .card:hover { background: #efefef; }
     .card img {
-      width: 100%; aspect-ratio: 439 / 240; object-fit: cover; object-position: top;
-      border-radius: 8px; background: var(--line); display: block;
+      width: 53.5%; aspect-ratio: 243 / 171;
+      object-fit: cover; object-position: top;
+      border-radius: 6px; background: #fff; display: block;
+      box-shadow: 0 6px 9px 4.5px rgba(177,177,177,0.15), 0 3px 3px 0 rgba(200,200,200,0.3);
+      transition: transform 0.2s ease;
     }
-    .row { display: flex; align-items: center; gap: 8px; padding-left: 8px; min-width: 0; }
+    .card:hover img { transform: translateY(-3px); }
+    .row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; width: 100%; min-width: 0; }
+    .title {
+      font-size: 16px; font-weight: 600; line-height: 1.2; color: var(--title);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+      padding-top: 3px;
+    }
     .tag {
       flex-shrink: 0;
-      background: var(--tag); color: #fff;
-      font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500;
-      font-size: 11px; line-height: 1.2;
-      padding: 2px 4px; border-radius: 2px; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--chip); color: var(--text);
+      border: 1px solid rgba(208,208,208,0.1);
+      font-size: 12px; font-weight: 400; line-height: 1.18; letter-spacing: 0.24px;
+      padding: 4px; border-radius: 4px; white-space: nowrap;
     }
-    .title {
-      font-size: 16px; font-weight: 700; line-height: 1; font-variation-settings: "opsz" 14;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+
+    /* Suggest form */
+    .suggest {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+      max-width: 1520px; margin: 0 auto; padding: 16px 24px 16px;
     }
+    .suggest input, .suggest select, .suggest button {
+      font: inherit; font-size: 14px; color: var(--text);
+      background: #fff; border: 1px solid var(--chip);
+      padding: 8px 10px; border-radius: 4px; height: 36px;
+    }
+    .suggest input { flex: 1 1 260px; max-width: 420px; }
+    .suggest button { background: var(--text); color: #fff; border-color: var(--text); font-weight: 600; cursor: pointer; }
+    .suggest .note { flex-basis: 100%; color: var(--muted); font-size: 13px; margin: 0; }
     .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 80px 0; }
 </style>
 </head>
@@ -80,6 +103,17 @@
     <h1>Resources</h1>
     <p class="sub" id="count">Loading…</p>
   </header>
+  <form class="suggest" id="suggest">
+    <input id="s-url" type="url" placeholder="https://" required aria-label="Link">
+    <select id="s-tag" aria-label="Tag">
+      <option>UI Resources</option>
+      <option>Designer</option>
+      <option>Writing</option>
+      <option>Design Talks</option>
+    </select>
+    <button type="submit">Suggest</button>
+    <p class="note">Opens GitHub with your suggestion filled in. It appears here once approved.</p>
+  </form>
   <nav class="filters" id="filters" aria-label="Filter by tag"></nav>
   <main id="grid"></main>
 
@@ -137,12 +171,28 @@
         const row = el('div', 'row');
         const info = tagInfo(r.tag);
         const tag = el('span', 'tag', info.label);
-        tag.style.background = info.color;
-        row.append(tag, el('span', 'title', r.title));
+        row.append(el('span', 'title', r.title), tag);
         a.append(img, row);
         return a;
       }));
     }
+
+    // Suggest form: opens a pre-filled "Add resource" issue on GitHub
+    const REPO = 'https://github.com/shatabdii/Resources';
+    document.getElementById('suggest').onsubmit = (e) => {
+      e.preventDefault();
+      const link = document.getElementById('s-url').value.trim();
+      const tag = document.getElementById('s-tag').value;
+      let host = link;
+      try { host = new URL(link).hostname.replace(/^www\./, ''); } catch {}
+      const q = new URLSearchParams({
+        template: 'add-resource.yml',
+        title: '[Resource] ' + host,
+        url: link,
+        tag: tag,
+      });
+      window.open(REPO + '/issues/new?' + q.toString(), '_blank', 'noopener');
+    };
 
     fetch('resources.json?t=' + Date.now())
       .then(r => r.json())
