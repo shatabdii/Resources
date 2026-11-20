@@ -1,5 +1,12 @@
 [
   {
+    "title": "Kevin",
+    "tag": "UI Resources",
+    "url": "https://www.kevn.co/",
+    "image": "screenshots/kevn-co.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Motion Transitions",
     "tag": "UI Resources",
     "url": "https://transitions.dev/",
