@@ -1,5 +1,12 @@
 [
   {
+    "title": "Examples",
+    "tag": "UI Resources",
+    "url": "https://torph.lochie.me/examples",
+    "image": "screenshots/torph-lochie-me-examples.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Components",
     "tag": "UI Resources",
     "url": "https://www.affectui.com/components",
