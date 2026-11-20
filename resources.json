@@ -1,5 +1,12 @@
 [
   {
+    "title": "UX Patterns",
+    "tag": "UI Resources",
+    "url": "https://www.northbase.design/patterns",
+    "image": "screenshots/northbase-design-patterns.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Karl Koch",
     "tag": "Designer",
     "url": "https://karlkoch.me/",
