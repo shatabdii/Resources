@@ -1,5 +1,12 @@
 [
   {
+    "title": "Beautiful UI",
+    "tag": "UI Resources",
+    "url": "https://www.beautifului.dev/",
+    "image": "screenshots/beautifului-dev.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Icons",
     "tag": "UI Resources",
     "url": "https://lucide.dev/icons/",
