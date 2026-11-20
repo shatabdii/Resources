@@ -1,5 +1,12 @@
 [
   {
+    "title": "Esben Lorenzen",
+    "tag": "Designer",
+    "url": "https://www.esbenlorenzen.com/",
+    "image": "screenshots/esbenlorenzen-com.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Bencho",
     "tag": "UI Resources",
     "url": "https://bencho.dev/",
