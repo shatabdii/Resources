@@ -1,0 +1,63 @@
+name: Add resource
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: add-resource
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    if: startsWith(github.event.issue.title, '[Resource]') && github.event.issue.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      NUMBER: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install browser
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Take screenshot
+        id: capture
+        run: node scripts/capture.mjs
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+
+      - name: Save to repo
+        env:
+          TITLE: ${{ steps.capture.outputs.title }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add resources.json screenshots
+          git diff --cached --quiet || git commit -m "Add resource: $TITLE"
+          git pull --rebase
+          git push
+
+      - name: Publish website
+        run: gh workflow run pages.yml
+
+      - name: Close issue
+        env:
+          TITLE: ${{ steps.capture.outputs.title }}
+        run: gh issue close "$NUMBER" --comment "Added **$TITLE**. The website updates in about a minute. Run Sync in the Figma plugin to update Figma."
+
+      - name: Report a problem
+        if: failure()
+        run: gh issue comment "$NUMBER" --body "Something went wrong while adding this link. Open the Actions tab to see what happened."
