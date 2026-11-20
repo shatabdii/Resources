@@ -1,5 +1,12 @@
 [
   {
+    "title": "Motion Transitions",
+    "tag": "UI Resources",
+    "url": "https://transitions.dev/",
+    "image": "screenshots/transitions-dev.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Florian Kiem",
     "tag": "UI Resources",
     "url": "https://floriankiem.com/writing",
