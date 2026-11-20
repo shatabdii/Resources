@@ -1,5 +1,12 @@
 [
   {
+    "title": "Icons",
+    "tag": "UI Resources",
+    "url": "https://lucide.dev/icons/",
+    "image": "screenshots/lucide-dev-icons.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "UX Patterns",
     "tag": "UI Resources",
     "url": "https://www.northbase.design/patterns",
