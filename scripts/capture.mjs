@@ -35,6 +35,8 @@ async function main() {
   const rawUrl = field(body, 'Link');
   const tag = field(body, 'Tag').replace(/\s+/g, ' ').trim();
   const customTitle = field(body, 'Title');
+  const subtagRaw = field(body, 'Sub-tag');
+  const subtag = /^none$/i.test(subtagRaw) ? '' : subtagRaw;
 
   let url;
   try {
@@ -69,6 +71,7 @@ async function main() {
   rest.unshift({
     title,
     tag: tag || 'Other',
+    ...(subtag ? { subtag } : {}),
     url: url.href,
     image,
     added: new Date().toISOString().slice(0, 10),

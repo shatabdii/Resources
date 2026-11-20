@@ -56,6 +56,7 @@
     }
     nav button:hover { color: var(--text); }
     nav button[aria-pressed="true"] { background: var(--nav-active); color: var(--text); font-weight: 600; }
+    nav button.sub { padding-left: 28px; }
 
     /* Add Resource button + panel */
     .add-btn {
@@ -134,6 +135,7 @@
         <form class="add-panel" id="add-panel">
           <input id="s-url" type="url" placeholder="https://" required aria-label="Link">
           <select id="s-tag" aria-label="Tag"></select>
+          <select id="s-sub" aria-label="Sub-tag" hidden></select>
           <p class="note">Opens GitHub with your suggestion filled in. It appears here once approved.</p>
         </form>
         <button class="add-btn" id="add-btn" type="button">Add Resource</button>
@@ -147,8 +149,8 @@
 
     // Tags, in the order they appear in the sidebar. Matches the Tag component in Figma.
     const TAGS = [
-      { name: 'Designer',     emoji: '🖥️' },
-      { name: 'UI Resources', emoji: '🌐' },
+      { name: 'Portfolios',   emoji: '🖥️', aliases: ['designer'] },
+      { name: 'UI Resources', emoji: '🌐', subtags: ['CSS Components', 'Motion Components'] },
       { name: 'Design Talks', emoji: '💡' },
       { name: 'Writing',      emoji: '✍🏼' },
     ];
@@ -156,11 +158,12 @@
     const grid = document.getElementById('grid');
     const filters = document.getElementById('filters');
     let all = [];
-    let active = 'All';
+    let active = { tag: 'All', sub: '' };
 
     function tagInfo(tag) {
       const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
-      const known = TAGS.find(t => t.name.toLowerCase() === name.toLowerCase());
+      const key = name.toLowerCase();
+      const known = TAGS.find(t => t.name.toLowerCase() === key || (t.aliases || []).includes(key));
       return { name: known ? known.name : name, label: known ? known.emoji + ' ' + known.name : name };
     }
 
@@ -176,21 +179,33 @@
       return n;
     }
 
-    // Sidebar: "All Resources" plus every tag that has at least one resource
+    // Sidebar: "All Resources", each tag in use, and its sub-tags in use (indented)
+    function navButton(label, tag, sub, isSub) {
+      const b = el('button', isSub ? 'sub' : '', label);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', String(active.tag === tag && active.sub === sub));
+      b.onclick = () => { active = { tag, sub }; renderFilters(); renderGrid(); };
+      return b;
+    }
+
     function renderFilters() {
       const used = new Set(all.map(r => tagInfo(r.tag).name));
-      const names = ['All', ...TAGS.map(t => t.name).filter(n => used.has(n)), ...[...used].filter(n => !TAGS.some(t => t.name === n))];
-      filters.replaceChildren(...names.map(n => {
-        const b = el('button', '', n === 'All' ? 'All Resources' : n);
-        b.type = 'button';
-        b.setAttribute('aria-pressed', String(n === active));
-        b.onclick = () => { active = n; renderFilters(); renderGrid(); };
-        return b;
-      }));
+      const names = [...TAGS.map(t => t.name).filter(n => used.has(n)), ...[...used].filter(n => !TAGS.some(t => t.name === n))];
+      const buttons = [navButton('All Resources', 'All', '', false)];
+      for (const n of names) {
+        buttons.push(navButton(n, n, '', false));
+        const known = TAGS.find(t => t.name === n);
+        const usedSubs = new Set(all.filter(r => tagInfo(r.tag).name === n && r.subtag).map(r => r.subtag));
+        const subs = [...((known && known.subtags) || []).filter(x => usedSubs.has(x)), ...[...usedSubs].filter(x => !(known && (known.subtags || []).includes(x)))];
+        for (const sub of subs) buttons.push(navButton(sub, n, sub, true));
+      }
+      filters.replaceChildren(...buttons);
     }
 
     function renderGrid() {
-      const list = active === 'All' ? all : all.filter(r => tagInfo(r.tag).name === active);
+      const list = all.filter(r =>
+        active.tag === 'All' ||
+        (tagInfo(r.tag).name === active.tag && (!active.sub || r.subtag === active.sub)));
       if (!list.length) { grid.replaceChildren(el('p', 'empty', 'No resources yet.')); return; }
       grid.replaceChildren(...list.map(r => {
         const a = el('a', 'card');
@@ -200,7 +215,9 @@
         const img = el('img');
         img.src = r.image; img.alt = r.title; img.loading = 'lazy';
         const row = el('div', 'row');
-        row.append(el('span', 'title', r.title), el('span', 'tag', tagInfo(r.tag).label));
+        const info = tagInfo(r.tag);
+        const chip = r.subtag ? info.label.split(' ')[0] + ' ' + r.subtag : info.label;
+        row.append(el('span', 'title', r.title), el('span', 'tag', chip));
         a.append(img, row);
         return a;
       }));
@@ -211,7 +228,16 @@
     const addBtn = document.getElementById('add-btn');
     const urlInput = document.getElementById('s-url');
     const tagSelect = document.getElementById('s-tag');
+    const subSelect = document.getElementById('s-sub');
     tagSelect.replaceChildren(...TAGS.map(t => el('option', '', t.name)));
+    function updateSubSelect() {
+      const t = TAGS.find(x => x.name === tagSelect.value);
+      const subs = (t && t.subtags) || [];
+      subSelect.replaceChildren(el('option', '', 'None'), ...subs.map(x => el('option', '', x)));
+      subSelect.hidden = subs.length === 0;
+    }
+    tagSelect.onchange = updateSubSelect;
+    updateSubSelect();
 
     function submitSuggestion() {
       if (!urlInput.reportValidity()) return;
@@ -224,6 +250,7 @@
         url: link,
         tag: tagSelect.value,
       });
+      if (!subSelect.hidden && subSelect.value !== 'None') q.set('subtag', subSelect.value);
       window.open(REPO + '/issues/new?' + q.toString(), '_blank', 'noopener');
       urlInput.value = '';
       panel.classList.remove('open');
