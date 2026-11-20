@@ -21,13 +21,12 @@ body:
         - Design Talks
     validations:
       required: true
-  - type: dropdown
+   - type: dropdown
     id: subtag
     attributes:
       label: Sub-tag (optional)
-      description: Only for UI Resources. Leave as None for other tags.
+      description: Only for UI Resources. Leave empty for other tags.
       options:
-        - None
         - CSS Components
         - Motion Components
     validations:
