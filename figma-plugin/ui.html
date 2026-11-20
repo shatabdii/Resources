@@ -1,0 +1,41 @@
+<style>
+  body { font: 12px Inter, system-ui, sans-serif; margin: 0; padding: 16px; color: #111; }
+  label { display: block; font-weight: 600; margin-bottom: 6px; }
+  input { width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font: inherit; }
+  .hint { color: #777; margin: 6px 0 14px; line-height: 1.4; }
+  button { width: 100%; padding: 10px; border: 0; border-radius: 6px; background: #0d99ff; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: 0.5; cursor: default; }
+  #status { margin-top: 12px; line-height: 1.5; white-space: pre-wrap; color: #333; }
+  .error { color: #d92d20 !important; }
+</style>
+
+<label for="site">Your site address</label>
+<input id="site" placeholder="https://yourname.github.io/resources/">
+<p class="hint">Select a Resource Card on the canvas first, or keep a component named "Resource Card" in this file.</p>
+<button id="sync">Sync</button>
+<div id="status"></div>
+
+<script>
+  const site = document.getElementById('site');
+  const btn = document.getElementById('sync');
+  const status = document.getElementById('status');
+
+  btn.onclick = () => {
+    btn.disabled = true;
+    status.className = '';
+    status.textContent = 'Syncing…';
+    parent.postMessage({ pluginMessage: { type: 'sync', siteUrl: site.value.trim() } }, '*');
+  };
+
+  onmessage = (e) => {
+    const msg = e.data.pluginMessage;
+    if (!msg) return;
+    if (msg.type === 'init') site.value = msg.siteUrl || '';
+    if (msg.type === 'status') status.textContent = msg.text;
+    if (msg.type === 'done' || msg.type === 'error') {
+      btn.disabled = false;
+      status.textContent = msg.text;
+      status.className = msg.type === 'error' ? 'error' : '';
+    }
+  };
+</script>

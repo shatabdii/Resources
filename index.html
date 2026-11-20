@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources</title>
+  <meta name="description" content="A curated library of design resources.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f5f4;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #6b6b6b;
+      --line: #e7e5e4;
+      --tag: #c2410c;
+      --link: #2563eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 64px 24px 24px;
+    }
+    h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .sub { color: var(--muted); font-size: 16px; margin: 0; }
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      max-width: 1240px; margin: 0 auto; padding: 8px 24px 24px;
+    }
+    .filters button {
+      font: inherit; font-size: 14px; font-weight: 500;
+      border: 1px solid var(--line); background: var(--card); color: var(--text);
+      padding: 6px 14px; border-radius: 999px; cursor: pointer;
+    }
+    .filters button[aria-pressed="true"] { background: var(--text); color: #fff; border-color: var(--text); }
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      max-width: 1240px; margin: 0 auto; padding: 0 24px 80px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+      display: flex; flex-direction: column; gap: 18px;
+      text-decoration: none; color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 12px 28px rgba(0,0,0,0.08); }
+    .card img {
+      width: 100%; aspect-ratio: 439 / 240; object-fit: cover; object-position: top;
+      border-radius: 10px; background: var(--line); display: block;
+      border: 1px solid var(--line);
+    }
+    .row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+    .tag {
+      justify-self: start;
+      background: var(--tag); color: #fff;
+      font-size: 12px; font-weight: 600;
+      padding: 3px 8px; border-radius: 4px;
+    }
+    .title { font-size: 16px; font-weight: 600; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .link { justify-self: end; color: var(--link); font-size: 13px; font-weight: 600; text-decoration: underline; }
+    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 80px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Resources</h1>
+    <p class="sub" id="count">Loading…</p>
+  </header>
+  <nav class="filters" id="filters" aria-label="Filter by tag"></nav>
+  <main id="grid"></main>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const count = document.getElementById('count');
+    let all = [];
+    let active = 'All';
+
+    function safeUrl(u) {
+      try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : '#'; }
+      catch { return '#'; }
+    }
+
+    function el(tag, cls, text) {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    function renderFilters() {
+      const tags = ['All', ...new Set(all.map(r => r.tag))];
+      filters.replaceChildren(...tags.map(t => {
+        const b = el('button', '', t);
+        b.setAttribute('aria-pressed', String(t === active));
+        b.onclick = () => { active = t; renderFilters(); renderGrid(); };
+        return b;
+      }));
+    }
+
+    function renderGrid() {
+      const list = active === 'All' ? all : all.filter(r => r.tag === active);
+      if (!list.length) { grid.replaceChildren(el('p', 'empty', 'No resources yet.')); return; }
+      grid.replaceChildren(...list.map(r => {
+        const a = el('a', 'card');
+        a.href = safeUrl(r.url);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        const img = el('img');
+        img.src = r.image; img.alt = r.title; img.loading = 'lazy';
+        const row = el('div', 'row');
+        row.append(el('span', 'tag', r.tag), el('span', 'title', r.title), el('span', 'link', '🔗 Link'));
+        a.append(img, row);
+        return a;
+      }));
+    }
+
+    fetch('resources.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        all = data;
+        count.textContent = data.length === 1 ? '1 resource' : data.length + ' resources';
+        renderFilters();
+        renderGrid();
+      })
+      .catch(() => { count.textContent = 'Could not load resources.'; });
+  </script>
+</body>
+</html>
