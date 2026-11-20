@@ -1,5 +1,12 @@
 [
   {
+    "title": "Bencho",
+    "tag": "UI Resources",
+    "url": "https://bencho.dev/",
+    "image": "screenshots/bencho-dev.jpg",
+    "added": "2026-11-20"
+  },
+  {
     "title": "Built by Designers: No Explanation Needed",
     "tag": "UI Resources",
     "url": "https://builtbydesigners.com/",
