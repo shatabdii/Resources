@@ -8,16 +8,19 @@
   <style>
     @font-face { font-family: 'Aspekta'; font-weight: 400; font-display: swap; src: url('fonts/Aspekta-400.woff2') format('woff2'); }
     @font-face { font-family: 'Aspekta'; font-weight: 600; font-display: swap; src: url('fonts/Aspekta-600.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 650; font-display: swap; src: url('fonts/Aspekta-650.woff2') format('woff2'); }
     @font-face { font-family: 'Aspekta'; font-weight: 700; font-display: swap; src: url('fonts/Aspekta-700.woff2') format('woff2'); }
+
     :root {
       --bg: #ffffff;
       --card: #f6f6f6;
       --title: #444444;
       --text: #373332;
-      --muted: #6b6b6b;
+      --muted: #777777;
       --chip: #e8e7e7;
+      --nav-active: #e9e9e9;
       --line: #e5e5e5;
-      --shadow: 0 1px 2px 0 rgba(0,0,0,0.3), 0 2px 6px 2px rgba(0,0,0,0.15);
+      --sidebar: 284px;
     }
     * { box-sizing: border-box; }
     body {
@@ -27,28 +30,55 @@
       color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
-    header { max-width: 1520px; margin: 0 auto; padding: 64px 24px 16px; }
-    h1 { font-size: 32px; font-weight: 700; color: var(--title); letter-spacing: -0.02em; margin: 0 0 8px; }
-    .sub { color: var(--muted); font-size: 15px; margin: 0; }
 
-    /* Filter chips: same style as the tags */
-    .filters {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      max-width: 1520px; margin: 0 auto; padding: 8px 24px 32px;
-    }
-    .filters button {
-      font: inherit; font-size: 14px; letter-spacing: 0.24px; color: var(--text);
-      background: var(--chip); border: 1px solid transparent;
-      padding: 6px 10px; border-radius: 4px; cursor: pointer;
-    }
-    .filters button[aria-pressed="true"] { background: var(--text); color: #fff; }
+    /* ---------- Layout: sidebar + grid ---------- */
+    .layout { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
 
-    /* Cards */
+    /* ---------- Sidebar ---------- */
+    aside {
+      position: sticky; top: 0; height: 100vh;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 32px 16px 16px 32px;
+      background: var(--bg);
+    }
+    .side-top { display: flex; flex-direction: column; gap: 16px; }
+    h1 {
+      font-size: 32px; font-weight: 650; line-height: 1.2; letter-spacing: -0.16px;
+      color: var(--title); margin: 0;
+    }
+    nav { display: flex; flex-direction: column; }
+    nav button {
+      display: flex; align-items: center; height: 32px; width: 100%;
+      padding: 0 4px 0 12px; border: 0; border-radius: 4px;
+      background: transparent; cursor: pointer; text-align: left;
+      font: inherit; font-size: 12px; font-weight: 400; line-height: 1.18; letter-spacing: 0.24px;
+      color: var(--muted);
+    }
+    nav button:hover { color: var(--text); }
+    nav button[aria-pressed="true"] { background: var(--nav-active); color: var(--text); font-weight: 600; }
+
+    /* Add Resource button + panel */
+    .add-btn {
+      width: 100%; height: 32px; border: 1px solid rgba(208,208,208,0.1); border-radius: 4px;
+      background: linear-gradient(90deg, #2d2d2d, #525252); color: #fff; cursor: pointer;
+      font: inherit; font-size: 12px; font-weight: 700; line-height: 1.18; letter-spacing: 0.24px;
+    }
+    .add-btn:hover { background: linear-gradient(90deg, #1f1f1f, #444444); }
+    .add-panel { display: none; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+    .add-panel.open { display: flex; }
+    .add-panel input, .add-panel select {
+      width: 100%; height: 32px; padding: 0 10px;
+      font: inherit; font-size: 12px; letter-spacing: 0.24px; color: var(--text);
+      background: #fff; border: 1px solid var(--chip); border-radius: 4px;
+    }
+    .add-panel .note { font-size: 11px; line-height: 1.4; color: var(--muted); margin: 0; }
+
+    /* ---------- Cards ---------- */
     main {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 24px;
-      max-width: 1520px; margin: 0 auto; padding: 0 24px 80px;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 8px;
+      align-content: start;
     }
     .card {
       background: var(--card);
@@ -81,60 +111,58 @@
       font-size: 12px; font-weight: 400; line-height: 1.18; letter-spacing: 0.24px;
       padding: 4px; border-radius: 4px; white-space: nowrap;
     }
+    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 120px 0; font-size: 14px; }
 
-    /* Suggest form */
-    .suggest {
-      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-      max-width: 1520px; margin: 0 auto; padding: 16px 24px 16px;
+    /* ---------- Small screens: sidebar on top ---------- */
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; padding: 24px 16px; gap: 16px; }
+      nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+      nav button { width: auto; padding: 0 12px; }
+      main { grid-template-columns: 1fr; padding: 0 8px 8px; }
     }
-    .suggest input, .suggest select, .suggest button {
-      font: inherit; font-size: 14px; color: var(--text);
-      background: #fff; border: 1px solid var(--chip);
-      padding: 8px 10px; border-radius: 4px; height: 36px;
-    }
-    .suggest input { flex: 1 1 260px; max-width: 420px; }
-    .suggest button { background: var(--text); color: #fff; border-color: var(--text); font-weight: 600; cursor: pointer; }
-    .suggest .note { flex-basis: 100%; color: var(--muted); font-size: 13px; margin: 0; }
-    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 80px 0; }
-</style>
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Resources</h1>
-    <p class="sub" id="count">Loading…</p>
-  </header>
-  <form class="suggest" id="suggest">
-    <input id="s-url" type="url" placeholder="https://" required aria-label="Link">
-    <select id="s-tag" aria-label="Tag">
-      <option>UI Resources</option>
-      <option>Designer</option>
-      <option>Writing</option>
-      <option>Design Talks</option>
-    </select>
-    <button type="submit">Suggest</button>
-    <p class="note">Opens GitHub with your suggestion filled in. It appears here once approved.</p>
-  </form>
-  <nav class="filters" id="filters" aria-label="Filter by tag"></nav>
-  <main id="grid"></main>
+  <div class="layout">
+    <aside>
+      <div class="side-top">
+        <h1>Resources</h1>
+        <nav id="filters" aria-label="Filter by tag"></nav>
+      </div>
+      <div>
+        <form class="add-panel" id="add-panel">
+          <input id="s-url" type="url" placeholder="https://" required aria-label="Link">
+          <select id="s-tag" aria-label="Tag"></select>
+          <p class="note">Opens GitHub with your suggestion filled in. It appears here once approved.</p>
+        </form>
+        <button class="add-btn" id="add-btn" type="button">Add Resource</button>
+      </div>
+    </aside>
+    <main id="grid"></main>
+  </div>
 
   <script>
+    const REPO = 'https://github.com/shatabdii/Resources';
+
+    // Tags, in the order they appear in the sidebar. Matches the Tag component in Figma.
+    const TAGS = [
+      { name: 'Designer',     emoji: '🖥️' },
+      { name: 'UI Resources', emoji: '🌐' },
+      { name: 'Design Talks', emoji: '💡' },
+      { name: 'Writing',      emoji: '✍🏼' },
+    ];
+
     const grid = document.getElementById('grid');
     const filters = document.getElementById('filters');
-    const count = document.getElementById('count');
-    // Tag styles, matching the Tag component in Figma
-    const TAGS = {
-      'ui resources': { emoji: '🌐', color: '#bd572b' },
-      'designer':     { emoji: '🖥️', color: '#2b52bd' },
-      'writing':      { emoji: '✍🏼', color: '#3abd2b' },
-      'design talks': { emoji: '💡', color: '#962bbd' },
-    };
-    function tagInfo(tag) {
-      const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
-      const style = TAGS[name.toLowerCase()] || { emoji: '', color: '#6b6b6b' };
-      return { name, label: (style.emoji ? style.emoji + ' ' : '') + name, color: style.color };
-    }
     let all = [];
     let active = 'All';
+
+    function tagInfo(tag) {
+      const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
+      const known = TAGS.find(t => t.name.toLowerCase() === name.toLowerCase());
+      return { name: known ? known.name : name, label: known ? known.emoji + ' ' + known.name : name };
+    }
 
     function safeUrl(u) {
       try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : '#'; }
@@ -148,12 +176,15 @@
       return n;
     }
 
+    // Sidebar: "All Resources" plus every tag that has at least one resource
     function renderFilters() {
-      const tags = ['All', ...new Set(all.map(r => tagInfo(r.tag).name))];
-      filters.replaceChildren(...tags.map(t => {
-        const b = el('button', '', t === 'All' ? t : tagInfo(t).label);
-        b.setAttribute('aria-pressed', String(t === active));
-        b.onclick = () => { active = t; renderFilters(); renderGrid(); };
+      const used = new Set(all.map(r => tagInfo(r.tag).name));
+      const names = ['All', ...TAGS.map(t => t.name).filter(n => used.has(n)), ...[...used].filter(n => !TAGS.some(t => t.name === n))];
+      filters.replaceChildren(...names.map(n => {
+        const b = el('button', '', n === 'All' ? 'All Resources' : n);
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(n === active));
+        b.onclick = () => { active = n; renderFilters(); renderGrid(); };
         return b;
       }));
     }
@@ -169,40 +200,51 @@
         const img = el('img');
         img.src = r.image; img.alt = r.title; img.loading = 'lazy';
         const row = el('div', 'row');
-        const info = tagInfo(r.tag);
-        const tag = el('span', 'tag', info.label);
-        row.append(el('span', 'title', r.title), tag);
+        row.append(el('span', 'title', r.title), el('span', 'tag', tagInfo(r.tag).label));
         a.append(img, row);
         return a;
       }));
     }
 
-    // Suggest form: opens a pre-filled "Add resource" issue on GitHub
-    const REPO = 'https://github.com/shatabdii/Resources';
-    document.getElementById('suggest').onsubmit = (e) => {
-      e.preventDefault();
-      const link = document.getElementById('s-url').value.trim();
-      const tag = document.getElementById('s-tag').value;
+    // Add Resource: first click opens the panel, second click sends to GitHub
+    const panel = document.getElementById('add-panel');
+    const addBtn = document.getElementById('add-btn');
+    const urlInput = document.getElementById('s-url');
+    const tagSelect = document.getElementById('s-tag');
+    tagSelect.replaceChildren(...TAGS.map(t => el('option', '', t.name)));
+
+    function submitSuggestion() {
+      if (!urlInput.reportValidity()) return;
+      const link = urlInput.value.trim();
       let host = link;
       try { host = new URL(link).hostname.replace(/^www\./, ''); } catch {}
       const q = new URLSearchParams({
         template: 'add-resource.yml',
         title: '[Resource] ' + host,
         url: link,
-        tag: tag,
+        tag: tagSelect.value,
       });
       window.open(REPO + '/issues/new?' + q.toString(), '_blank', 'noopener');
+      urlInput.value = '';
+      panel.classList.remove('open');
+      addBtn.textContent = 'Add Resource';
+    }
+
+    addBtn.onclick = () => {
+      if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
+        addBtn.textContent = 'Open on GitHub';
+        urlInput.focus();
+      } else {
+        submitSuggestion();
+      }
     };
+    panel.onsubmit = (e) => { e.preventDefault(); submitSuggestion(); };
 
     fetch('resources.json?t=' + Date.now())
       .then(r => r.json())
-      .then(data => {
-        all = data;
-        count.textContent = data.length === 1 ? '1 resource' : data.length + ' resources';
-        renderFilters();
-        renderGrid();
-      })
-      .catch(() => { count.textContent = 'Could not load resources.'; });
+      .then(data => { all = data; renderFilters(); renderGrid(); })
+      .catch(() => { grid.replaceChildren(el('p', 'empty', 'Could not load resources.')); });
   </script>
 </body>
 </html>
