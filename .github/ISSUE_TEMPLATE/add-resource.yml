@@ -10,12 +10,15 @@ body:
       placeholder: https://example.com
     validations:
       required: true
-  - type: input
+  - type: dropdown
     id: tag
     attributes:
       label: Tag
-      description: One word that groups this resource.
-      placeholder: Designer
+      options:
+        - UI Resources
+        - Designer
+        - Writing
+        - Design Talks
     validations:
       required: true
   - type: input
