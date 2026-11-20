@@ -36,3 +36,123 @@
     .filters button {
       font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px;
       border: 1px solid var(--line); background: var(--card); color: var(--text);
+      padding: 4px 10px; border-radius: 4px; cursor: pointer;
+    }
+    .filters button[aria-pressed="true"] { background: var(--tag); color: #fff; border-color: var(--tag); }
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      max-width: 1520px; margin: 0 auto; padding: 0 24px 80px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 4px 4px 12px;
+      box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 8px;
+      overflow: hidden;
+      text-decoration: none; color: inherit;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 2px 3px 0 rgba(0,0,0,0.3), 0 6px 10px 4px rgba(0,0,0,0.15); }
+    .card img {
+      width: 100%; aspect-ratio: 439 / 240; object-fit: cover; object-position: top;
+      border-radius: 8px; background: var(--line); display: block;
+    }
+    .row { display: flex; align-items: center; gap: 8px; padding-left: 8px; min-width: 0; }
+    .tag {
+      flex-shrink: 0;
+      background: var(--tag); color: #fff;
+      font-family: 'DM Mono', ui-monospace, monospace; font-weight: 500;
+      font-size: 8px; line-height: 1.2;
+      padding: 2px 4px; border-radius: 2px; white-space: nowrap;
+    }
+    .title {
+      font-size: 12px; font-weight: 700; line-height: 1; font-variation-settings: "opsz" 14;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 80px 0; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Resources</h1>
+    <p class="sub" id="count">Loading…</p>
+  </header>
+  <nav class="filters" id="filters" aria-label="Filter by tag"></nav>
+  <main id="grid"></main>
+
+  <script>
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const count = document.getElementById('count');
+    // Tag styles, matching the Tag component in Figma
+    const TAGS = {
+      'ui resources': { emoji: '🌐', color: '#bd572b' },
+      'designer':     { emoji: '🖥️', color: '#2b52bd' },
+      'writing':      { emoji: '✍🏼', color: '#3abd2b' },
+      'design talks': { emoji: '💡', color: '#962bbd' },
+    };
+    function tagInfo(tag) {
+      const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
+      const style = TAGS[name.toLowerCase()] || { emoji: '', color: '#6b6b6b' };
+      return { name, label: (style.emoji ? style.emoji + ' ' : '') + name, color: style.color };
+    }
+    let all = [];
+    let active = 'All';
+
+    function safeUrl(u) {
+      try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : '#'; }
+      catch { return '#'; }
+    }
+
+    function el(tag, cls, text) {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    function renderFilters() {
+      const tags = ['All', ...new Set(all.map(r => tagInfo(r.tag).name))];
+      filters.replaceChildren(...tags.map(t => {
+        const b = el('button', '', t === 'All' ? t : tagInfo(t).label);
+        b.setAttribute('aria-pressed', String(t === active));
+        b.onclick = () => { active = t; renderFilters(); renderGrid(); };
+        return b;
+      }));
+    }
+
+    function renderGrid() {
+      const list = active === 'All' ? all : all.filter(r => tagInfo(r.tag).name === active);
+      if (!list.length) { grid.replaceChildren(el('p', 'empty', 'No resources yet.')); return; }
+      grid.replaceChildren(...list.map(r => {
+        const a = el('a', 'card');
+        a.href = safeUrl(r.url);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        const img = el('img');
+        img.src = r.image; img.alt = r.title; img.loading = 'lazy';
+        const row = el('div', 'row');
+        const info = tagInfo(r.tag);
+        const tag = el('span', 'tag', info.label);
+        tag.style.background = info.color;
+        row.append(tag, el('span', 'title', r.title));
+        a.append(img, row);
+        return a;
+      }));
+    }
+
+    fetch('resources.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        all = data;
+        count.textContent = data.length === 1 ? '1 resource' : data.length + ' resources';
+        renderFilters();
+        renderGrid();
+      })
+      .catch(() => { count.textContent = 'Could not load resources.'; });
+  </script>
+</body>
+</html>
