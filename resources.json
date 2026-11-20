@@ -2,6 +2,7 @@
   {
     "title": "Kevin",
     "tag": "Designer",
+    "subtag": "Portfilio",
     "url": "https://www.kevn.co/",
     "image": "screenshots/kevn-co.jpg",
     "added": "2026-11-20"
@@ -9,6 +10,7 @@
   {
     "title": "Motion Transitions",
     "tag": "UI Resources",
+    "subtag": "Motion components",
     "url": "https://transitions.dev/",
     "image": "screenshots/transitions-dev.jpg",
     "added": "2026-11-20"
@@ -16,6 +18,7 @@
   {
     "title": "Florian Kiem",
     "tag": "Designer",
+    "subtag": "Portfilio",
     "url": "https://floriankiem.com/writing",
     "image": "screenshots/floriankiem-com-writing.jpg",
     "added": "2026-11-20"
@@ -23,6 +26,7 @@
   {
     "title": "Esben Lorenzen",
     "tag": "Designer",
+    "subtag": "Portfilio",
     "url": "https://www.esbenlorenzen.com/",
     "image": "screenshots/esbenlorenzen-com.jpg",
     "added": "2026-11-20"
@@ -44,6 +48,7 @@
   {
     "title": "Motion UI",
     "tag": "UI Resources",
+    "subtag": "Motion components",
     "url": "https://torph.lochie.me/examples",
     "image": "screenshots/torph-lochie-me-examples.jpg",
     "added": "2026-11-20"
@@ -79,6 +84,7 @@
   {
     "title": "Karl Koch",
     "tag": "Designer",
+    "subtag": "Portfilio",
     "url": "https://karlkoch.me/",
     "image": "screenshots/karlkoch-me.jpg",
     "added": "2026-11-20"
