@@ -16,21 +16,22 @@ body:
       label: Tags
       description: Pick Designers, Libraries, Writings, The Context Room first, then any other tags that fit.
       multiple: true
-      options:
+            options:
         - Designers
-        - Portfolio
-        - Talks
-        - Writing
         - Libraries
+        - The Reading Room
+        - The Context Room
+        - Portfolios
+        - Talks
+        - Thoughts
+        - Podcast
         - UI
         - AI
         - Motion
         - Icons
-        - Writings
         - UX
         - Product
-        - UI
-        - The Context Room
+        - Process
         - AI Process
         - AI Prompts
         - AI Components
