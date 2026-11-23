@@ -14,19 +14,27 @@ body:
     id: tags
     attributes:
       label: Tags
-      description: Pick Designers or Components first, then any other tags that fit.
+      description: Pick Designers, Libraries, Writings, The Context Room first, then any other tags that fit.
       multiple: true
       options:
         - Designers
-        - Components
         - Portfolio
         - Talks
         - Writing
-        - UI library
+        - Libraries
+        - UI
         - AI
         - Motion
         - Icons
+        - Writings
         - UX
+        - Product
+        - UI
+        - The Context Room
+        - AI Process
+        - AI Prompts
+        - AI Components
+        - Voice
     validations:
       required: true
   - type: input
