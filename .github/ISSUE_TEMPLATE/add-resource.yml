@@ -14,17 +14,19 @@ body:
     id: tags
     attributes:
       label: Tags
-      description: Pick one or more. The first one you pick sets the tag in Figma.
+      description: Pick Designers or Components first, then any other tags that fit.
       multiple: true
       options:
-        - Designer
+        - Designers
         - Components
         - Portfolio
+        - Talks
         - Writing
-        - UI
-        - UX
+        - UI library
+        - AI
         - Motion
         - Icons
+        - UX
     validations:
       required: true
   - type: input
