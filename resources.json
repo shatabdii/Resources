@@ -1,101 +1,91 @@
 [
   {
     "title": "Predictability vs Outcomes",
-    "tag": "Product",
-    "subtag": "Writing",
+    "tags": ["The Reading Room", "Product"],
     "url": "https://www.svpg.com/predictability-vs-outcomes/",
     "image": "screenshots/svpg-com-predictability-vs-outcomes.jpg",
     "added": "2026-11-23"
   },
   {
     "title": "Kevin",
-    "tag": "Designer",
-    "subtag": "Portfilio",
+    "tags": ["Designers", "Thoughts"],
     "url": "https://www.kevn.co/",
     "image": "screenshots/kevn-co.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Motion Transitions",
-    "tag": "Components",
-    "subtag": "Motion",
+    "tags": ["Libraries", "Motion"],
     "url": "https://transitions.dev/",
     "image": "screenshots/transitions-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Florian Kiem",
-    "tag": "Designer",
-    "subtag": "Writing",
+    "tags": ["Designers", "Thoughts"],
     "url": "https://floriankiem.com/writing",
     "image": "screenshots/floriankiem-com-writing.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Esben Lorenzen",
-    "tag": "Designers",
-    "subtag": "Portfilio",
+    "tags": ["Designers", "Portfolios"],
     "url": "https://www.esbenlorenzen.com/",
     "image": "screenshots/esbenlorenzen-com.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Bencho",
-    "tag": "Components",
+    "tags": ["Libraries"],
     "url": "https://bencho.dev/",
     "image": "screenshots/bencho-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Built by Designers",
-    "tag": "Components",
+    "tags": ["Libraries"],
     "url": "https://builtbydesigners.com/",
     "image": "screenshots/builtbydesigners-com.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Motion UI",
-    "tag": "Components",
-    "subtag": "Motion",
+    "tags": ["Libraries", "Motion"],
     "url": "https://torph.lochie.me/examples",
     "image": "screenshots/torph-lochie-me-examples.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Affect UI Components",
-    "tag": "Components",
+    "tags": ["Libraries"],
     "url": "https://www.affectui.com/components",
     "image": "screenshots/affectui-com-components.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Beautiful UI components",
-    "tag": "Components",
-    "subtag": "UI",
+    "tags": ["Libraries", "UI"],
     "url": "https://www.beautifului.dev/",
     "image": "screenshots/beautifului-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Lucide Icons",
-    "tag": "Components",
-    "subtag": "Icons",
+    "tags": ["Libraries", "Icons"],
     "url": "https://lucide.dev/icons/",
     "image": "screenshots/lucide-dev-icons.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Northbase UX patterns",
-    "tag": "Components",
-    "subtag": "UX",
+    "tags": ["Libraries", "UX"],
     "url": "https://www.northbase.design/patterns",
     "image": "screenshots/northbase-design-patterns.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Karl Koch",
-    "tag": "Designer",
-    "subtag": "Writing",
+    "tags": ["Designers", "Thoughts"],
     "url": "https://karlkoch.me/",
     "image": "screenshots/karlkoch-me.jpg",
     "added": "2026-11-20"
