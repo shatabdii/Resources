@@ -155,28 +155,37 @@
     const REPO = 'https://github.com/shatabdii/Resources';
 
     // Tags, in the order they appear in the sidebar. Matches the Tag component in Figma.
+    // Every tag, with old spellings mapped to the current name
     const TAGS = [
-      { name: 'Designer',  emoji: '' },
-      { name: 'Components', emoji: '' },
-      { name: 'Portfolio',  emoji: '', aliases: ['portfilio', 'portfolios'] },
-      { name: 'Writing',    emoji: '' },
-      { name: 'UI',         emoji: '' },
-      { name: 'UX',         emoji: '' },
-      { name: 'Motion',     emoji: '' },
-      { name: 'Icons',      emoji: '' },
+      { name: 'Designers',  aliases: ['designer'] },
+      { name: 'Components' },
+      { name: 'Portfolio',  aliases: ['portfilio', 'portfolios'] },
+      { name: 'Talks',      aliases: ['design talks'] },
+      { name: 'Writing' },
+      { name: 'UI library', aliases: ['ui', 'ui resources'] },
+      { name: 'AI' },
+      { name: 'Motion' },
+      { name: 'Icons' },
+      { name: 'UX' },
+    ];
+
+    // Sidebar groups. A card shows under a group when it has the group's tag.
+    const GROUPS = [
+      { name: 'Designers',  children: ['Portfolio', 'Talks', 'Writing'] },
+      { name: 'Components', children: ['UI library', 'AI', 'Motion', 'Icons', 'UX'] },
     ];
 
     const grid = document.getElementById('grid');
     const filters = document.getElementById('filters');
     let all = [];
-    let active = 'All';
+    let active = { group: 'All', child: '' };
 
     function tagInfo(tag) {
       const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
       const key = name.toLowerCase();
       const known = TAGS.find(t => t.name.toLowerCase() === key || (t.aliases || []).includes(key));
       const finalName = known ? known.name : name;
-      return { name: finalName, label: known && known.emoji ? known.emoji + ' ' + finalName : finalName };
+      return { name: finalName, label: finalName };
     }
 
     // Every resource as a list of tag names. Older cards used "tag" + "subtag".
@@ -197,21 +206,43 @@
       return n;
     }
 
-    // Sidebar: "All Resources" plus every tag that has at least one resource
+    // Sidebar: groups with their sub-tags indented underneath.
+    // Sub-tags show only when a card in that group uses them, so a designer
+    // tagged "Motion" makes Motion appear under Designers too.
+    function navButton(label, group, child, isSub) {
+      const b = el('button', isSub ? 'sub' : '', label);
+      b.type = 'button';
+      b.setAttribute('aria-pressed', String(active.group === group && active.child === child));
+      b.onclick = () => { active = { group, child }; renderFilters(); renderGrid(); };
+      return b;
+    }
+
     function renderFilters() {
-      const used = new Set(all.flatMap(tagsOf));
-      const names = [...TAGS.map(t => t.name).filter(n => used.has(n)), ...[...used].filter(n => !TAGS.some(t => t.name === n))];
-      filters.replaceChildren(...['All', ...names].map(n => {
-        const b = el('button', '', n === 'All' ? 'All Resources' : n);
-        b.type = 'button';
-        b.setAttribute('aria-pressed', String(n === active));
-        b.onclick = () => { active = n; renderFilters(); renderGrid(); };
-        return b;
-      }));
+      const buttons = [navButton('All Resources', 'All', '', false)];
+      const order = TAGS.map(t => t.name);
+      const groupNames = GROUPS.map(g => g.name);
+      for (const g of GROUPS) {
+        const inGroup = all.filter(r => tagsOf(r).includes(g.name));
+        if (!inGroup.length) continue;
+        buttons.push(navButton(g.name, g.name, '', false));
+        const used = new Set(inGroup.flatMap(tagsOf).filter(t => !groupNames.includes(t)));
+        const children = [
+          ...g.children.filter(c => used.has(c)),
+          ...[...used].filter(c => !g.children.includes(c)).sort((a, b) => order.indexOf(a) - order.indexOf(b)),
+        ];
+        for (const c of children) buttons.push(navButton(c, g.name, c, true));
+      }
+      // Tags on cards that aren't in any group
+      const loose = new Set(all.filter(r => !tagsOf(r).some(t => groupNames.includes(t))).flatMap(tagsOf));
+      for (const t of loose) buttons.push(navButton(t, t, '', false));
+      filters.replaceChildren(...buttons);
     }
 
     function renderGrid() {
-      const list = active === 'All' ? all : all.filter(r => tagsOf(r).includes(active));
+      const list = active.group === 'All' ? all : all.filter(r => {
+        const t = tagsOf(r);
+        return t.includes(active.group) && (!active.child || t.includes(active.child));
+      });
       if (!list.length) { grid.replaceChildren(el('p', 'empty', 'No resources yet.')); return; }
       grid.replaceChildren(...list.map(r => {
         const a = el('a', 'card');
