@@ -14,9 +14,9 @@ body:
     id: tags
     attributes:
       label: Tags
-      description: Pick Designers, Libraries, Writings, The Context Room first, then any other tags that fit.
+      description: Pick one group first (Designers, Libraries, The Reading Room or The Context Room), then any other tags that fit.
       multiple: true
-            options:
+      options:
         - Designers
         - Libraries
         - The Reading Room
