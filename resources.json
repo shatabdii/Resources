@@ -1,7 +1,7 @@
 [
   {
     "title": "Kevin",
-    "tag": "Designers",
+    "tag": "Designer",
     "subtag": "Portfilio",
     "url": "https://www.kevn.co/",
     "image": "screenshots/kevn-co.jpg",
@@ -17,7 +17,7 @@
   },
   {
     "title": "Florian Kiem",
-    "tag": "Designers",
+    "tag": "Designer",
     "subtag": "Writing",
     "url": "https://floriankiem.com/writing",
     "image": "screenshots/floriankiem-com-writing.jpg",
@@ -86,7 +86,7 @@
   },
   {
     "title": "Karl Koch",
-    "tag": "Designers",
+    "tag": "Designer",
     "subtag": "Writing",
     "url": "https://karlkoch.me/",
     "image": "screenshots/karlkoch-me.jpg",
