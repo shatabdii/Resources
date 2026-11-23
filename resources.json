@@ -1,7 +1,7 @@
 [
   {
     "title": "Kevin",
-    "tag": "Designer",
+    "tag": "Designers",
     "subtag": "Portfilio",
     "url": "https://www.kevn.co/",
     "image": "screenshots/kevn-co.jpg",
@@ -9,23 +9,23 @@
   },
   {
     "title": "Motion Transitions",
-    "tag": "UI Resources",
-    "subtag": "Motion components",
+    "tag": "Components",
+    "subtag": "Motion",
     "url": "https://transitions.dev/",
     "image": "screenshots/transitions-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Florian Kiem",
-    "tag": "Designer",
-    "subtag": "Portfilio",
+    "tag": "Designers",
+    "subtag": "Writing",
     "url": "https://floriankiem.com/writing",
     "image": "screenshots/floriankiem-com-writing.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Esben Lorenzen",
-    "tag": "Designer",
+    "tag": "Designers",
     "subtag": "Portfilio",
     "url": "https://www.esbenlorenzen.com/",
     "image": "screenshots/esbenlorenzen-com.jpg",
@@ -33,58 +33,61 @@
   },
   {
     "title": "Bencho",
-    "tag": "UI Resources",
+    "tag": "Components",
     "url": "https://bencho.dev/",
     "image": "screenshots/bencho-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Built by Designers",
-    "tag": "UI Resources",
+    "tag": "Components",
     "url": "https://builtbydesigners.com/",
     "image": "screenshots/builtbydesigners-com.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Motion UI",
-    "tag": "UI Resources",
-    "subtag": "Motion components",
+    "tag": "Components",
+    "subtag": "Motion",
     "url": "https://torph.lochie.me/examples",
     "image": "screenshots/torph-lochie-me-examples.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Affect UI Components",
-    "tag": "UI Resources",
+    "tag": "Components",
     "url": "https://www.affectui.com/components",
     "image": "screenshots/affectui-com-components.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Beautiful UI components",
-    "tag": "UI Resources",
+    "tag": "Components",
+    "subtag": "UI",
     "url": "https://www.beautifului.dev/",
     "image": "screenshots/beautifului-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Lucide Icons",
-    "tag": "UI Resources",
+    "tag": "Components",
+    "subtag": "Icons",
     "url": "https://lucide.dev/icons/",
     "image": "screenshots/lucide-dev-icons.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Northbase UX patterns",
-    "tag": "UI Resources",
+    "tag": "Components",
+    "subtag": "UX",
     "url": "https://www.northbase.design/patterns",
     "image": "screenshots/northbase-design-patterns.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Karl Koch",
-    "tag": "Designer",
-    "subtag": "Portfilio",
+    "tag": "Designers",
+    "subtag": "Writing",
     "url": "https://karlkoch.me/",
     "image": "screenshots/karlkoch-me.jpg",
     "added": "2026-11-20"
