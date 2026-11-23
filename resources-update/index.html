@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources</title>
+  <meta name="description" content="A curated library of design resources.">
+  <style>
+    @font-face { font-family: 'Aspekta'; font-weight: 400; font-display: swap; src: url('fonts/Aspekta-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 600; font-display: swap; src: url('fonts/Aspekta-600.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 650; font-display: swap; src: url('fonts/Aspekta-650.woff2') format('woff2'); }
+    @font-face { font-family: 'Aspekta'; font-weight: 700; font-display: swap; src: url('fonts/Aspekta-700.woff2') format('woff2'); }
+
+    :root {
+      --bg: #ffffff;
+      --card: #f6f6f6;
+      --title: #444444;
+      --text: #373332;
+      --muted: #777777;
+      --chip: #e8e7e7;
+      --nav-active: #e9e9e9;
+      --line: #e5e5e5;
+      --sidebar: 284px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Aspekta', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------- Layout: sidebar + grid ---------- */
+    .layout { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
+
+    /* ---------- Sidebar ---------- */
+    aside {
+      position: sticky; top: 0; height: 100vh;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 32px 16px 16px 32px;
+      background: var(--bg);
+    }
+    .side-top { display: flex; flex-direction: column; gap: 16px; }
+    h1 {
+      font-size: 32px; font-weight: 650; line-height: 1.2; letter-spacing: -0.16px;
+      color: var(--title); margin: 0;
+    }
+    nav { display: flex; flex-direction: column; }
+    nav button {
+      display: flex; align-items: center; height: 32px; width: 100%;
+      padding: 0 4px 0 12px; border: 0; border-radius: 4px;
+      background: transparent; cursor: pointer; text-align: left;
+      font: inherit; font-size: 12px; font-weight: 400; line-height: 1.18; letter-spacing: 0.24px;
+      color: var(--muted);
+    }
+    nav button:hover { color: var(--text); }
+    nav button[aria-pressed="true"] { background: var(--nav-active); color: var(--text); font-weight: 600; }
+    nav button.sub { padding-left: 28px; }
+
+    /* Add Resource button + panel */
+    .add-btn {
+      width: 100%; height: 32px; border: 1px solid rgba(208,208,208,0.1); border-radius: 4px;
+      background: linear-gradient(90deg, #2d2d2d, #525252); color: #fff; cursor: pointer;
+      font: inherit; font-size: 12px; font-weight: 700; line-height: 1.18; letter-spacing: 0.24px;
+    }
+    .add-btn:hover { background: linear-gradient(90deg, #1f1f1f, #444444); }
+    .add-panel { display: none; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+    .add-panel.open { display: flex; }
+    .add-panel input, .add-panel select {
+      width: 100%; height: 32px; padding: 0 10px;
+      font: inherit; font-size: 12px; letter-spacing: 0.24px; color: var(--text);
+      background: #fff; border: 1px solid var(--chip); border-radius: 4px;
+    }
+    .checks { display: flex; flex-wrap: wrap; gap: 6px; }
+    .checks label {
+      display: inline-flex; align-items: center; gap: 4px; cursor: pointer;
+      font-size: 12px; letter-spacing: 0.24px; color: var(--text);
+      background: var(--chip); border-radius: 4px; padding: 4px 6px;
+    }
+    .checks input { margin: 0; accent-color: var(--text); width: auto; height: auto; }
+    .add-panel .note { font-size: 11px; line-height: 1.4; color: var(--muted); margin: 0; }
+
+    /* ---------- Cards ---------- */
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 8px;
+      align-content: start;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 48px 16px 12px;
+      display: flex; flex-direction: column; align-items: center; gap: 80px;
+      text-decoration: none; color: inherit;
+      transition: background 0.15s ease;
+    }
+    .card:hover { background: #efefef; }
+    .card img {
+      width: 53.5%; aspect-ratio: 243 / 171;
+      object-fit: cover; object-position: top;
+      border-radius: 6px; background: #fff; display: block;
+      box-shadow: 0 6px 9px 4.5px rgba(177,177,177,0.15), 0 3px 3px 0 rgba(200,200,200,0.3);
+      transition: transform 0.2s ease;
+    }
+    .card:hover img { transform: translateY(-3px); }
+    .row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; width: 100%; min-width: 0; }
+    .title {
+      font-size: 16px; font-weight: 600; line-height: 1.2; color: var(--title);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+      padding-top: 3px;
+    }
+    .tags { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; flex-shrink: 1; min-width: 0; }
+    .tag {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--chip); color: var(--text);
+      border: 1px solid rgba(208,208,208,0.1);
+      font-size: 12px; font-weight: 400; line-height: 1.18; letter-spacing: 0.24px;
+      padding: 4px; border-radius: 4px; white-space: nowrap;
+    }
+    .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 120px 0; font-size: 14px; }
+
+    /* ---------- Small screens: sidebar on top ---------- */
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; padding: 24px 16px; gap: 16px; }
+      nav { flex-direction: row; flex-wrap: wrap; gap: 4px; }
+      nav button { width: auto; padding: 0 12px; }
+      main { grid-template-columns: 1fr; padding: 0 8px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="side-top">
+        <h1>Resources</h1>
+        <nav id="filters" aria-label="Filter by tag"></nav>
+      </div>
+      <div>
+        <form class="add-panel" id="add-panel">
+          <input id="s-url" type="url" placeholder="https://" required aria-label="Link">
+          <div class="checks" id="s-tags" role="group" aria-label="Tags"></div>
+          <p class="note">Opens GitHub with your suggestion filled in. It appears here once approved.</p>
+        </form>
+        <button class="add-btn" id="add-btn" type="button">Add Resource</button>
+      </div>
+    </aside>
+    <main id="grid"></main>
+  </div>
+
+  <script>
+    const REPO = 'https://github.com/shatabdii/Resources';
+
+    // Tags, in the order they appear in the sidebar. Matches the Tag component in Figma.
+    const TAGS = [
+      { name: 'Designers',  emoji: '' },
+      { name: 'Components', emoji: '' },
+      { name: 'Portfolio',  emoji: '', aliases: ['portfilio', 'portfolios'] },
+      { name: 'Writing',    emoji: '' },
+      { name: 'UI',         emoji: '' },
+      { name: 'UX',         emoji: '' },
+      { name: 'Motion',     emoji: '' },
+      { name: 'Icons',      emoji: '' },
+    ];
+
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    let all = [];
+    let active = 'All';
+
+    function tagInfo(tag) {
+      const name = String(tag || '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
+      const key = name.toLowerCase();
+      const known = TAGS.find(t => t.name.toLowerCase() === key || (t.aliases || []).includes(key));
+      const finalName = known ? known.name : name;
+      return { name: finalName, label: known && known.emoji ? known.emoji + ' ' + finalName : finalName };
+    }
+
+    // Every resource as a list of tag names. Older cards used "tag" + "subtag".
+    function tagsOf(r) {
+      const raw = Array.isArray(r.tags) ? r.tags : [r.tag, r.subtag];
+      return [...new Set(raw.filter(Boolean).map(t => tagInfo(t).name))];
+    }
+
+    function safeUrl(u) {
+      try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : '#'; }
+      catch { return '#'; }
+    }
+
+    function el(tag, cls, text) {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    }
+
+    // Sidebar: "All Resources" plus every tag that has at least one resource
+    function renderFilters() {
+      const used = new Set(all.flatMap(tagsOf));
+      const names = [...TAGS.map(t => t.name).filter(n => used.has(n)), ...[...used].filter(n => !TAGS.some(t => t.name === n))];
+      filters.replaceChildren(...['All', ...names].map(n => {
+        const b = el('button', '', n === 'All' ? 'All Resources' : n);
+        b.type = 'button';
+        b.setAttribute('aria-pressed', String(n === active));
+        b.onclick = () => { active = n; renderFilters(); renderGrid(); };
+        return b;
+      }));
+    }
+
+    function renderGrid() {
+      const list = active === 'All' ? all : all.filter(r => tagsOf(r).includes(active));
+      if (!list.length) { grid.replaceChildren(el('p', 'empty', 'No resources yet.')); return; }
+      grid.replaceChildren(...list.map(r => {
+        const a = el('a', 'card');
+        a.href = safeUrl(r.url);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        const img = el('img');
+        img.src = r.image; img.alt = r.title; img.loading = 'lazy';
+        const row = el('div', 'row');
+        const chips = el('div', 'tags');
+        tagsOf(r).forEach(t => chips.append(el('span', 'tag', tagInfo(t).label)));
+        row.append(el('span', 'title', r.title), chips);
+        a.append(img, row);
+        return a;
+      }));
+    }
+
+    // Add Resource: first click opens the panel, second click sends to GitHub
+    const panel = document.getElementById('add-panel');
+    const addBtn = document.getElementById('add-btn');
+    const urlInput = document.getElementById('s-url');
+    const tagBox = document.getElementById('s-tags');
+    tagBox.replaceChildren(...TAGS.map(t => {
+      const label = el('label');
+      const box = el('input'); box.type = 'checkbox'; box.value = t.name;
+      label.append(box, document.createTextNode(t.name));
+      return label;
+    }));
+
+    function submitSuggestion() {
+      if (!urlInput.reportValidity()) return;
+      const picked = [...tagBox.querySelectorAll('input:checked')].map(b => b.value);
+      const note = panel.querySelector('.note');
+      if (!picked.length) { note.textContent = 'Pick at least one tag.'; note.style.color = '#c0392b'; return; }
+      note.textContent = 'Opens GitHub with your suggestion filled in. It appears here once approved.'; note.style.color = '';
+      const link = urlInput.value.trim();
+      let host = link;
+      try { host = new URL(link).hostname.replace(/^www\./, ''); } catch {}
+      const q = new URLSearchParams({
+        template: 'add-resource.yml',
+        title: '[Resource] ' + host,
+        url: link,
+        tags: picked.join(','),
+      });
+      window.open(REPO + '/issues/new?' + q.toString(), '_blank', 'noopener');
+      urlInput.value = '';
+      tagBox.querySelectorAll('input').forEach(b => { b.checked = false; });
+      panel.classList.remove('open');
+      addBtn.textContent = 'Add Resource';
+    }
+
+    addBtn.onclick = () => {
+      if (!panel.classList.contains('open')) {
+        panel.classList.add('open');
+        addBtn.textContent = 'Open on GitHub';
+        urlInput.focus();
+      } else {
+        submitSuggestion();
+      }
+    };
+    panel.onsubmit = (e) => { e.preventDefault(); submitSuggestion(); };
+
+    fetch('resources.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(data => { all = data; renderFilters(); renderGrid(); })
+      .catch(() => { grid.replaceChildren(el('p', 'empty', 'Could not load resources.')); });
+  </script>
+</body>
+</html>
