@@ -17,7 +17,7 @@ body:
       description: Pick one or more. The first one you pick sets the tag in Figma.
       multiple: true
       options:
-        - Designers
+        - Designer
         - Components
         - Portfolio
         - Writing
