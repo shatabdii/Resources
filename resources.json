@@ -1,5 +1,12 @@
 [
   {
+    "title": "Using gestures in Motion",
+    "tag": "Motion, Thoughts, The Reading Room",
+    "url": "https://jakub.kr/work/motion-gestures",
+    "image": "screenshots/jakub-kr-work-motion-gestures.jpg",
+    "added": "2026-11-25"
+  },
+  {
     "title": "How Uber Evals 1 Million Agent Skill Invocations a Month",
     "tag": "The Context Room, AI Process",
     "url": "https://www.uber.com/us/en/blog/optimizing-ubers-agent-skills/",
