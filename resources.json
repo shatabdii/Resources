@@ -1,91 +1,134 @@
 [
   {
+    "title": "Minor Adventures",
+    "tag": "Libraries, Icons",
+    "url": "https://www.minoradventures.co/#products",
+    "image": "screenshots/minoradventures-co.jpg",
+    "added": "2026-11-25"
+  },
+  {
     "title": "Predictability vs Outcomes",
-    "tags": ["The Reading Room", "Product"],
+    "tags": [
+      "The Reading Room",
+      "Product"
+    ],
     "url": "https://www.svpg.com/predictability-vs-outcomes/",
     "image": "screenshots/svpg-com-predictability-vs-outcomes.jpg",
     "added": "2026-11-23"
   },
   {
     "title": "Kevin",
-    "tags": ["Designers", "Thoughts"],
+    "tags": [
+      "Designers",
+      "Thoughts"
+    ],
     "url": "https://www.kevn.co/",
     "image": "screenshots/kevn-co.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Motion Transitions",
-    "tags": ["Libraries", "Motion"],
+    "tags": [
+      "Libraries",
+      "Motion"
+    ],
     "url": "https://transitions.dev/",
     "image": "screenshots/transitions-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Florian Kiem",
-    "tags": ["Designers", "Thoughts"],
+    "tags": [
+      "Designers",
+      "Thoughts"
+    ],
     "url": "https://floriankiem.com/writing",
     "image": "screenshots/floriankiem-com-writing.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Esben Lorenzen",
-    "tags": ["Designers", "Portfolios"],
+    "tags": [
+      "Designers",
+      "Portfolios"
+    ],
     "url": "https://www.esbenlorenzen.com/",
     "image": "screenshots/esbenlorenzen-com.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Bencho",
-    "tags": ["Libraries"],
+    "tags": [
+      "Libraries"
+    ],
     "url": "https://bencho.dev/",
     "image": "screenshots/bencho-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Built by Designers",
-    "tags": ["Libraries"],
+    "tags": [
+      "Libraries"
+    ],
     "url": "https://builtbydesigners.com/",
     "image": "screenshots/builtbydesigners-com.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Motion UI",
-    "tags": ["Libraries", "Motion"],
+    "tags": [
+      "Libraries",
+      "Motion"
+    ],
     "url": "https://torph.lochie.me/examples",
     "image": "screenshots/torph-lochie-me-examples.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Affect UI Components",
-    "tags": ["Libraries"],
+    "tags": [
+      "Libraries"
+    ],
     "url": "https://www.affectui.com/components",
     "image": "screenshots/affectui-com-components.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Beautiful UI components",
-    "tags": ["Libraries", "UI"],
+    "tags": [
+      "Libraries",
+      "UI"
+    ],
     "url": "https://www.beautifului.dev/",
     "image": "screenshots/beautifului-dev.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Lucide Icons",
-    "tags": ["Libraries", "Icons"],
+    "tags": [
+      "Libraries",
+      "Icons"
+    ],
     "url": "https://lucide.dev/icons/",
     "image": "screenshots/lucide-dev-icons.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Northbase UX patterns",
-    "tags": ["Libraries", "UX"],
+    "tags": [
+      "Libraries",
+      "UX"
+    ],
     "url": "https://www.northbase.design/patterns",
     "image": "screenshots/northbase-design-patterns.jpg",
     "added": "2026-11-20"
   },
   {
     "title": "Karl Koch",
-    "tags": ["Designers", "Thoughts"],
+    "tags": [
+      "Designers",
+      "Thoughts"
+    ],
     "url": "https://karlkoch.me/",
     "image": "screenshots/karlkoch-me.jpg",
     "added": "2026-11-20"
